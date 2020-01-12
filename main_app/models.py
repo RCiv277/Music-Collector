@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-class Songs(model.models):
+class Song(model.models):
     name = models.CharField(max_length=50)
     genre = models.CharField(max_length=50)
     duration = models.TimeField()
