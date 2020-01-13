@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Song , Artist
 
 
@@ -12,11 +13,20 @@ def home(request):
     return render(request, 'home.html')
 
 
+
 @login_required
 def songs_index(request):
-    song = Song.objects.filter(user = request.user)    
-    return render(request, 'songs/index.html' , 'songs' : songs)
+    songs = Song.objects.filter(user = request.user)    
+    return render(request, 'songs/index.html' , {'songs' : songs})
 
+@login_required
+def song_detail(request, song_id):
+    song = Song.objects.get(id = song_id)
+    artist = song.artist
+    return render(request, 'songs/details.html', {
+        'song': song,
+        'artist': artist,
+        })
 
 class SongCreate(LoginRequiredMixin, CreateView):
     model = Song
@@ -27,9 +37,16 @@ class SongDelete(LoginRequiredMixin, DeleteView):
     success_url = '/songs/'
 
 
+
+
 @login_required
 def artists_index(request):
-    return render(request, 'artists/index.html' , 'artists' : artists)
+    artists = Artist.objects
+    return render(request, 'artists/index.html' , {'artists' : artists})
+
+@login_required
+def artist_detail(request):
+    return
 
 class ArtistCreate(LoginRequiredMixin, CreateView):
     model = Artist

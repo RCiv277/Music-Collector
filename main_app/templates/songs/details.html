@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+
+
+
+
+<p>{{song.name}}</p>
+<p>Duration: {{ song.duration }}</p>
+<p>Release Year: {{ song.date}}</p>
+{% if artist %}
+<h6>{{ song.name }}'s Artist:</h6>
+<p>{{ artist.name }}</p>
+{% else %}
+<p>No Listed Artist</p>
+{% endif %}
+
+
+{% endblock %}
